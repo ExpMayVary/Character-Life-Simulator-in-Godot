@@ -90,6 +90,7 @@ func update_need(need_name, amount):
 			mental = clamp(mental + amount, 0, mental_max)
 
 # Predefined list of activities and their impact on needs
+# Can remove this once all activies are properly implimented in the get_activies section. 
 var list_of_activities = {
 	"sleeping": {"sleep": 30, "health": 5, "mental": 2},
 	"eating_at_home": {"food": 20, "health": 3},
@@ -117,7 +118,7 @@ var list_of_activities = {
 	"going_fishing": {"entertainment": 5, "mental": 5},
 	"painting": {"mental": 10, "entertainment": 5},
 	"writing": {"mental": 5},
-	"going_to_a_party": {"social": 25, "entertainment": 15},
+	"going_to_a_party": {"social": 25, "entertainment": 35},
 	"volunteering": {"social": 10, "mental": 10},
 	"going_to_a_library": {"mental": 15},
 	"cleaning_the_house": {"health": 5, "mental": -5}
@@ -125,12 +126,41 @@ var list_of_activities = {
 # Function to get available activities based on time and character-specific 
 func get_activities(time, character_name):
 	var available_activities = {}
+	# Activites available all the time and to everyone.  
 	var base_activities = {
 		"take_a_nap": {"sleep": 10},
 		"eating_at_home": {"food": 20, "health": 3},
+		"eating_out": {"food": 20, "social": 5, "entertainment": 2},
+		"grocery_shopping": {"food": 10, "physical": 3},
+		"going_to_the_gym": {"physical": 15, "health": 5},
+		"socializing_at_cafe": {"social": 20, "food": 5},
+		"watching_movie": {"entertainment": 15, "mental": -1},
+		"reading": {"mental": 10, "entertainment": 5},
+		"working_overtime": {"mental": -10, "physical": -5, "food": -5},
+		"going_to_doctor": {"health": 20},
+		"playing_sports": {"physical": 20, "social": 5, "health": 5},
+		"taking_a_bath": {"health": 10, "mental": 5},
+		"cooking": {"food": 15, "mental": 5},
+		"going_to_a_concert": {"entertainment": 20, "social": 10},
+		"visiting_family": {"social": 20, "mental": 5},
+		"doing_yoga": {"health": 10, "mental": 10},
+		"online_shopping": {"entertainment": 10, "mental": -2},
+		"playing_video_games": {"entertainment": 20, "mental": -5},
+		"going_to_a_museum": {"entertainment": 10, "mental": 10},
+		"gardening": {"mental": 5, "physical": 5},
+		"taking_a_walk": {"health": 5, "mental": 5, "physical": 5},
+		"going_to_the_beach": {"entertainment": 10, "health": 5},
+		"visiting_a_spa": {"health": 20, "mental": 10},
+		"going_fishing": {"entertainment": 5, "mental": 5},
+		"painting": {"mental": 10, "entertainment": 5},
+		"writing": {"mental": 5},
+		"going_to_a_party": {"social": 25, "entertainment": 35},
+		"volunteering": {"social": 10, "mental": 10},
+		"going_to_a_library": {"mental": 15},
+		"cleaning_the_house": {"health": 5, "mental": -5}
 	}
 	
-	# Time-based activities
+	# Time-based activities #WIP CERTAIN ACTIVITES ARE ONLY AVAILABLE AT CERTAIN TIMES 
 	match time:
 		0: # 12am - 4am
 			available_activities.merge({"sleeping": {"sleep": 30, "health": 5, "mental": 2},})
@@ -144,7 +174,8 @@ func get_activities(time, character_name):
 			available_activities.merge({"sleeping": {"sleep": 30, "health": 5, "mental": 2},})
 		5: # 8pm - 12am
 			available_activities.merge({"sleeping": {"sleep": 30, "health": 5, "mental": 2},})
-	# Character-specific activities
+	# Character-specific activities #WIP CERTAIN ACTIVITES ARE ONLY AVAILABLE FOR CERTAIN PEOPLE/s
+	# Good for jobs people with special hobbys
 	match character_name:
 		"Jane":
 			available_activities.merge({"sleeping": {"sleep": 30, "health": 5, "mental": 2},})
@@ -179,13 +210,18 @@ func apply_activity(activity_name):
 
 # Function to select the best activity based on the calculated utility
 func select_best_activity():
+	# Currently setting the time to zero, later you will impliment this with what ever time system you want to add. 
+	# the get_activies time section is hourly based but can easily be changed to whatever you want. though it is poorly writen so if you
+	# want min by min time you will need to write alot of match statements. like one for each min in the day. 
 	var activities = get_activities(0, Name_of_character)
 	var best_activity = ""
 	var highest_utility = -1.0
 	
 	for activity_name in activities.keys():
+		print(activity_name)
 		var activity = activities[activity_name]
 		var utility = calculate_utility(activity)
+		print(utility)
 		if utility > highest_utility:
 			best_activity = activity_name
 			highest_utility = utility

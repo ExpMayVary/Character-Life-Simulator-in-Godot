@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsvexx8cie7na"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_0fsuj"]
+
+[node name="control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_0fsuj")
+
+[node name="SleepLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 36.0
+offset_right = 284.0
+offset_bottom = 62.0
+text = "Sleep :"
+
+[node name="FoodLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 63.0
+offset_right = 57.0
+offset_bottom = 89.0
+text = "Food : "
+
+[node name="EntertainmentLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 88.0
+offset_right = 133.0
+offset_bottom = 114.0
+text = "Entertainment : "
+
+[node name="SocialLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 114.0
+offset_right = 62.0
+offset_bottom = 140.0
+text = "Social : "
+
+[node name="HealthLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 141.0
+offset_right = 106.0
+offset_bottom = 167.0
+text = "Health Label :"
+
+[node name="PhysicalLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 167.0
+offset_right = 121.0
+offset_bottom = 193.0
+text = "Physiclal Label "
+
+[node name="MentalLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 196.0
+offset_right = 74.0
+offset_bottom = 222.0
+text = "Mental : "
+
+[node name="ActivityLabel" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Activity : "
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
